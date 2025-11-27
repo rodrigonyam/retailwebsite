@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeautyHub - Premium Beauty & Wellness Products</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <i class="fas fa-spa"></i>
+                    <h1>BeautyHub</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#membership">Become a Reseller</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="nav-icons">
+                    <a href="#" class="icon" id="searchBtn"><i class="fas fa-search"></i></a>
+                    <a href="#" class="icon" id="cartBtn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                    <a href="#" class="icon" id="chatBtn" title="Chat with us"><i class="fas fa-comment-dots"></i></a>
+                    <div class="user-menu-wrapper">
+                        <a href="#" class="icon" id="userBtn"><i class="fas fa-user"></i></a>
+                        <div class="user-dropdown" id="userDropdown">
+                            <a href="#" class="dropdown-item" id="profileLink"><i class="fas fa-user-circle"></i> Profile</a>
+                            <a href="#" class="dropdown-item" id="accountLink"><i class="fas fa-cog"></i> Account Settings</a>
+                            <a href="#" class="dropdown-item" id="signupDropLink"><i class="fas fa-user-plus"></i> Sign Up</a>
+                            <a href="#" class="dropdown-item" id="loginDropLink"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            <a href="#" class="dropdown-item" id="referralLink"><i class="fas fa-share-alt"></i> Referral Program</a>
+                            <a href="#" class="dropdown-item" id="storeLocatorLink"><i class="fas fa-map-marker-alt"></i> Store in Your Area</a>
+                            <a href="#" class="dropdown-item" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Discover Your Natural Beauty</h2>
+            <p>Premium beauty products, vitamins, personal care, and home care solutions</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">Shop Now</a>
+                <a href="#membership" class="btn btn-secondary">Become a Reseller</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="category-grid">
+                <div class="category-card" data-category="beauty">
+                    <div class="category-icon">
+                        <i class="fas fa-sparkles"></i>
+                    </div>
+                    <h3>Beauty Products</h3>
+                    <p>Skincare, makeup, and beauty essentials</p>
+                </div>
+                <div class="category-card" data-category="vitamins">
+                    <div class="category-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Vitamins & Supplements</h3>
+                    <p>Health and wellness supplements</p>
+                </div>
+                <div class="category-card" data-category="personal">
+                    <div class="category-icon">
+                        <i class="fas fa-pump-soap"></i>
+                    </div>
+                    <h3>Personal Care</h3>
+                    <p>Bath, body, and personal hygiene</p>
+                </div>
+                <div class="category-card" data-category="home">
+                    <div class="category-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Home Care</h3>
+                    <p>Cleaning and home essentials</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Products</button>
+                <button class="filter-btn" data-filter="beauty">Beauty</button>
+                <button class="filter-btn" data-filter="vitamins">Vitamins</button>
+                <button class="filter-btn" data-filter="personal">Personal Care</button>
+                <button class="filter-btn" data-filter="home">Home Care</button>
+            </div>
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section class="membership" id="membership">
+        <div class="container">
+            <h2 class="section-title">Become a Reseller</h2>
+            <p class="membership-subtitle">Join our reseller program and earn while sharing products you love</p>
+            
+            <div class="membership-cards">
+                <div class="membership-card">
+                    <div class="card-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3>Customer</h3>
+                    <p class="price">Free</p>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> Shop all products</li>
+                        <li><i class="fas fa-check"></i> Regular pricing</li>
+                        <li><i class="fas fa-check"></i> Order tracking</li>
+                        <li><i class="fas fa-check"></i> Customer support</li>
+                    </ul>
+                    <button class="btn btn-outline">Shop Now</button>
+                </div>
+
+                <div class="membership-card featured">
+                    <div class="badge">Most Popular</div>
+                    <div class="card-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Reseller Member</h3>
+                    <p class="price">$99<span>/year</span></p>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> Wholesale pricing (20-30% off)</li>
+                        <li><i class="fas fa-check"></i> Resell products for profit</li>
+                        <li><i class="fas fa-check"></i> Marketing materials included</li>
+                        <li><i class="fas fa-check"></i> Dedicated reseller portal</li>
+                        <li><i class="fas fa-check"></i> Priority customer support</li>
+                        <li><i class="fas fa-check"></i> Monthly promotions</li>
+                    </ul>
+                    <button class="btn btn-primary" id="signupBtn">Sign Up Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Updates Section -->
+    <section class="product-updates" id="product-updates">
+        <div class="container">
+            <h2 class="section-title">Product Updates & Community</h2>
+            
+            <div class="updates-tabs">
+                <button class="tab-btn active" data-tab="upcoming">Upcoming Launches</button>
+                <button class="tab-btn" data-tab="suggestions">Suggest Products</button>
+                <button class="tab-btn" data-tab="discontinued">Discontinued</button>
+                <button class="tab-btn" data-tab="bringback">Bring Back Requests</button>
+            </div>
+
+            <!-- Upcoming Launches Tab -->
+            <div class="tab-content active" id="upcoming">
+                <div class="upcoming-products">
+                    <div class="upcoming-card">
+                        <div class="upcoming-badge">Coming Soon</div>
+                        <div class="upcoming-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3>Mignonne™ Retinol Serum</h3>
+                        <p>Advanced anti-aging formula with time-release retinol</p>
+                        <div class="launch-date">
+                            <i class="fas fa-calendar"></i> December 2025
+                        </div>
+                        <button class="btn btn-outline notify-btn">Notify Me</button>
+                    </div>
+                    <div class="upcoming-card">
+                        <div class="upcoming-badge">Coming Soon</div>
+                        <div class="upcoming-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Nature™ Organic Protein Powder</h3>
+                        <p>Plant-based protein with superfoods blend</p>
+                        <div class="launch-date">
+                            <i class="fas fa-calendar"></i> January 2026
+                        </div>
+                        <button class="btn btn-outline notify-btn">Notify Me</button>
+                    </div>
+                    <div class="upcoming-card">
+                        <div class="upcoming-badge">Coming Soon</div>
+                        <div class="upcoming-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <h3>Mignonne™ SPF 50 Sunscreen</h3>
+                        <p>Mineral-based sun protection with hydration</p>
+                        <div class="launch-date">
+                            <i class="fas fa-calendar"></i> February 2026
+                        </div>
+                        <button class="btn btn-outline notify-btn">Notify Me</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Suggestions Tab -->
+            <div class="tab-content" id="suggestions">
+                <div class="suggestion-form-wrapper">
+                    <div class="suggestion-intro">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Share Your Ideas</h3>
+                        <p>Have an idea for a new product? We'd love to hear from you! Your suggestions help us create products you'll love.</p>
+                        <p class="auth-notice" style="color: var(--primary-color); font-weight: 600; margin-top: 0.5rem;">
+                            <i class="fas fa-info-circle"></i> Please login or provide your contact information below to submit a suggestion
+                        </p>
+                    </div>
+                    <form class="suggestion-form" id="suggestionForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="Product Name" required>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="">Select Category</option>
+                                <option value="beauty">Beauty Products</option>
+                                <option value="vitamins">Vitamins & Supplements</option>
+                                <option value="personal">Personal Care</option>
+                                <option value="home">Home Care</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Describe your product idea..." rows="4" required></textarea>
+                        </div>
+                        <div class="guest-info-section">
+                            <h4 style="margin-bottom: 1rem; color: var(--dark-color); font-size: 0.95rem;">Guest Information (Required if not logged in)</h4>
+                            <div class="form-group">
+                                <input type="text" placeholder="Your Full Name" class="guest-name">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Your Email" class="guest-email">
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" placeholder="Your Phone Number" class="guest-phone">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Suggestion</button>
+                    </form>
+                    <div class="top-suggestions">
+                        <h4>Top Community Suggestions</h4>
+                        <div class="suggestion-item">
+                            <div class="suggestion-info">
+                                <i class="fas fa-fire"></i>
+                                <span>CBD-infused body lotion</span>
+                            </div>
+                            <div class="suggestion-votes">
+                                <button class="vote-btn"><i class="fas fa-thumbs-up"></i> 247</button>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-info">
+                                <i class="fas fa-fire"></i>
+                                <span>Vegan makeup brush set</span>
+                            </div>
+                            <div class="suggestion-votes">
+                                <button class="vote-btn"><i class="fas fa-thumbs-up"></i> 189</button>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-info">
+                                <i class="fas fa-fire"></i>
+                                <span>Eco-friendly cleaning pods</span>
+                            </div>
+                            <div class="suggestion-votes">
+                                <button class="vote-btn"><i class="fas fa-thumbs-up"></i> 156</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Discontinued Products Tab -->
+            <div class="tab-content" id="discontinued">
+                <div class="discontinued-list">
+                    <div class="discontinued-item">
+                        <div class="discontinued-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <div class="discontinued-info">
+                            <h4>Mignonne™ Rose Water Toner</h4>
+                            <p>Discontinued: August 2025</p>
+                            <p class="reason">Reason: Replaced by improved formula</p>
+                        </div>
+                        <button class="btn btn-outline bring-back-btn" data-product="Rose Water Toner">Request Bring Back</button>
+                    </div>
+                    <div class="discontinued-item">
+                        <div class="discontinued-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <div class="discontinued-info">
+                            <h4>Nature™ Green Tea Extract</h4>
+                            <p>Discontinued: July 2025</p>
+                            <p class="reason">Reason: Low demand</p>
+                        </div>
+                        <button class="btn btn-outline bring-back-btn" data-product="Green Tea Extract">Request Bring Back</button>
+                    </div>
+                    <div class="discontinued-item">
+                        <div class="discontinued-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <div class="discontinued-info">
+                            <h4>Lavender Sleep Spray</h4>
+                            <p>Discontinued: June 2025</p>
+                            <p class="reason">Reason: Seasonal product</p>
+                        </div>
+                        <button class="btn btn-outline bring-back-btn" data-product="Lavender Sleep Spray">Request Bring Back</button>
+                    </div>
+                    <div class="discontinued-item">
+                        <div class="discontinued-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <div class="discontinued-info">
+                            <h4>Charcoal Face Mask</h4>
+                            <p>Discontinued: May 2025</p>
+                            <p class="reason">Reason: Reformulation in progress</p>
+                        </div>
+                        <button class="btn btn-outline bring-back-btn" data-product="Charcoal Face Mask">Request Bring Back</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bring Back Requests Tab -->
+            <div class="tab-content" id="bringback">
+                <div class="bringback-wrapper">
+                    <div class="bringback-intro">
+                        <i class="fas fa-undo"></i>
+                        <h3>Request a Product Return</h3>
+                        <p>Miss a product we discontinued? Let us know! If enough customers request it, we'll consider bringing it back.</p>
+                        <p class="auth-notice" style="color: var(--primary-color); font-weight: 600; margin-top: 0.5rem;">
+                            <i class="fas fa-info-circle"></i> Please login or provide your contact information below to submit a request
+                        </p>
+                    </div>
+                    <form class="bringback-form" id="bringbackForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="Product Name" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Why should we bring this product back?" rows="4" required></textarea>
+                        </div>
+                        <div class="guest-info-section">
+                            <h4 style="margin-bottom: 1rem; color: var(--dark-color); font-size: 0.95rem;">Guest Information (Required if not logged in)</h4>
+                            <div class="form-group">
+                                <input type="text" placeholder="Your Full Name" class="guest-name">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Your Email" class="guest-email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" placeholder="Your Phone Number" class="guest-phone">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </form>
+                    <div class="popular-requests">
+                        <h4>Most Requested Products</h4>
+                        <div class="request-item">
+                            <div class="request-info">
+                                <i class="fas fa-star"></i>
+                                <div>
+                                    <h5>Rose Water Toner</h5>
+                                    <p>342 requests</p>
+                                </div>
+                            </div>
+                            <div class="request-status pending">
+                                <i class="fas fa-clock"></i> Under Review
+                            </div>
+                        </div>
+                        <div class="request-item">
+                            <div class="request-info">
+                                <i class="fas fa-star"></i>
+                                <div>
+                                    <h5>Lavender Sleep Spray</h5>
+                                    <p>278 requests</p>
+                                </div>
+                            </div>
+                            <div class="request-status approved">
+                                <i class="fas fa-check"></i> Returning Q1 2026
+                            </div>
+                        </div>
+                        <div class="request-item">
+                            <div class="request-info">
+                                <i class="fas fa-star"></i>
+                                <div>
+                                    <h5>Green Tea Extract</h5>
+                                    <p>156 requests</p>
+                                </div>
+                            </div>
+                            <div class="request-status pending">
+                                <i class="fas fa-clock"></i> Under Review
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About BeautyHub</h2>
+                    <p>BeautyHub is your trusted source for premium beauty products, vitamins, personal care, and home care solutions. We believe in natural beauty and wellness, offering carefully curated products that enhance your lifestyle.</p>
+                    <p>Our reseller program empowers entrepreneurs to build their own business by sharing products they love with their communities. Join thousands of successful resellers who have turned their passion into profit.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <h3>500+</h3>
+                            <p>Products</p>
+                        </div>
+                        <div class="stat">
+                            <h3>10K+</h3>
+                            <p>Happy Customers</p>
+                        </div>
+                        <div class="stat">
+                            <h3>2K+</h3>
+                            <p>Active Resellers</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 Beauty Street, Wellness City, BC 12345</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@beautyhub.com</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BeautyHub</h3>
+                    <p>Your trusted partner for beauty, wellness, and home care products.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#membership">Membership</a></li>
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe for exclusive offers and updates</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BeautyHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body" id="cartItems">
+                <p class="empty-cart">Your cart is empty</p>
+            </div>
+            <div class="modal-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">$0.00</span>
+                </div>
+                <button class="btn btn-primary" id="checkoutBtn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Signup Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="authTitle">Login</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="authForm">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group" id="nameGroup" style="display: none;">
+                        <input type="text" id="fullName" placeholder="Full Name">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="authSubmit">Login</button>
+                </form>
+                <p class="auth-switch">
+                    Don't have an account? <a href="#" id="switchAuth">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Membership Signup Modal -->
+    <div class="modal" id="membershipModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reseller Membership Signup</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="membershipForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Business Name (Optional)">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Tell us why you want to become a reseller" rows="4" required></textarea>
+                    </div>
+                    <div class="membership-summary">
+                        <h4>Membership Benefits:</h4>
+                        <ul>
+                            <li>Wholesale pricing (20-30% discount)</li>
+                            <li>Reseller portal access</li>
+                            <li>Marketing materials</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <div class="price-summary">
+                            <span>Annual Fee:</span>
+                            <span class="price">$99.00</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            I agree to the terms and conditions
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Pay $99 & Join Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <i class="fas fa-headset"></i>
+                <div>
+                    <h4>BeautyHub Support</h4>
+                    <span class="chat-status">Online</span>
+                </div>
+            </div>
+            <button class="chat-minimize" id="minimizeChat">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>Hello! Welcome to BeautyHub. How can I help you today?</p>
+                        <span class="message-time">Just now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Type your message..." disabled>
+            <button id="chatSend" disabled>
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat Button (Floating) -->
+    <button class="chat-button" id="chatButton">
+        <i class="fas fa-comments"></i>
+        <span class="chat-badge">1</span>
+    </button>
+
+    <!-- Chat Login Modal -->
+    <div class="modal" id="chatLoginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Start Chat</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="chat-login-intro">
+                    <i class="fas fa-comments"></i>
+                    <p>To provide you with better support, please login or provide your contact information.</p>
+                </div>
+                <div class="chat-login-options">
+                    <button class="btn btn-primary btn-block" id="chatLoginBtn">
+                        <i class="fas fa-sign-in-alt"></i> Login to Chat
+                    </button>
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+                    <form id="chatGuestForm">
+                        <h4>Continue as Guest</h4>
+                        <div class="form-group">
+                            <input type="text" id="chatGuestName" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="chatGuestEmail" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="chatGuestPhone" placeholder="Your Phone Number" required>
+                        </div>
+                        <button type="submit" class="btn btn-outline btn-block">
+                            <i class="fas fa-comment-dots"></i> Start Guest Chat
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/products.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
