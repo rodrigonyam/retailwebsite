@@ -1,5 +1,7 @@
 // Global variables
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+let comparison = JSON.parse(localStorage.getItem('comparison')) || [];
 let currentFilter = 'all';
 let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 let isMember = localStorage.getItem('isMember') === 'true';
@@ -15,33 +17,65 @@ function viewProduct(productId) {
 
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
-    initializeProducts();
-    updateCartCount();
-    setupEventListeners();
-    updateUserInterface();
+    // Small delay to ensure products.js is fully loaded
+    setTimeout(() => {
+        initializeProducts();
+        updateCartCount();
+        setupEventListeners();
+        updateUserInterface();
+    }, 100);
 });
 
 // Initialize products display
 function initializeProducts() {
+    console.log('Initializing products...', window.products, window.productsData);
     displayProducts(currentFilter);
 }
 
 // Display products based on filter
 function displayProducts(filter) {
+    console.log('displayProducts called with filter:', filter);
+    
     const productGrid = document.getElementById('productGrid');
-    const productsArray = window.products || products;
+    if (!productGrid) {
+        console.error('Product grid element not found!');
+        return;
+    }
+    
+    const productsArray = window.products || window.productsData || [];
+    console.log('Products array:', productsArray.length, 'products available');
+    
+    if (!productsArray || productsArray.length === 0) {
+        console.error('No products available to display');
+        productGrid.innerHTML = '<p style="text-align: center; padding: 2rem; color: #666;">No products available.</p>';
+        return;
+    }
     
     let filteredProducts = productsArray;
     if (filter !== 'all') {
-        filteredProducts = products.filter(product => product.category === filter);
+        filteredProducts = productsArray.filter(product => product.category === filter);
     }
+    
+    console.log('Filtered products:', filteredProducts.length, 'for filter:', filter);
     
     productGrid.innerHTML = '';
     
-    filteredProducts.forEach(product => {
-        const productCard = createProductCard(product);
-        productGrid.appendChild(productCard);
-    });
+    if (filteredProducts.length === 0) {
+        productGrid.innerHTML = '<p style="text-align: center; padding: 2rem; color: #666;">No products found in this category.</p>';
+        return;
+    }
+    
+    try {
+        filteredProducts.forEach((product, index) => {
+            console.log('Creating card for product:', product.name);
+            const productCard = createProductCard(product);
+            productGrid.appendChild(productCard);
+        });
+        console.log('Successfully displayed', filteredProducts.length, 'products');
+    } catch (error) {
+        console.error('Error creating product cards:', error);
+        productGrid.innerHTML = '<p style="text-align: center; padding: 2rem; color: #ff0000;">Error loading products.</p>';
+    }
 }
 
 // Create product card element
@@ -1236,10 +1270,6 @@ function showGuestRequestForm(productName, requestType) {
         }
     });
 }
-
-// Global variables for new features
-let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-let comparison = JSON.parse(localStorage.getItem('comparison')) || [];
 
 // Generate star rating HTML
 function generateStars(rating) {
