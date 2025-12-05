@@ -540,4 +540,5 @@ const products = [
 ];
 
 // Export products for use in main script
+window.products = products;
 window.productsData = products;

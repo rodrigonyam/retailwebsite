@@ -29,9 +29,9 @@ function initializeProducts() {
 // Display products based on filter
 function displayProducts(filter) {
     const productGrid = document.getElementById('productGrid');
-    const products = window.productsData;
+    const productsArray = window.products || products;
     
-    let filteredProducts = products;
+    let filteredProducts = productsArray;
     if (filter !== 'all') {
         filteredProducts = products.filter(product => product.category === filter);
     }
@@ -127,7 +127,7 @@ function getCategoryName(category) {
 
 // Add product to cart
 function addToCart(productId) {
-    const product = window.productsData.find(p => p.id === productId);
+    const product = (window.products || products).find(p => p.id === productId);
     if (!product) return;
     
     const price = isMember ? product.wholesalePrice : product.price;
@@ -1299,7 +1299,7 @@ function getAvailabilityIcon(availability) {
 
 // Product Quick View Modal
 function openProductModal(productId) {
-    const product = window.productsData.find(p => p.id === productId);
+    const product = (window.products || products).find(p => p.id === productId);
     if (!product) return;
     
     const modal = document.getElementById('productModal');
@@ -1354,7 +1354,7 @@ function changeQuantity(change) {
 
 // Wishlist functionality
 function toggleWishlist(productId) {
-    const product = window.productsData.find(p => p.id === productId);
+    const product = (window.products || products).find(p => p.id === productId);
     if (!product) return;
     
     const existingIndex = wishlist.findIndex(item => item.id === productId);
@@ -1380,7 +1380,7 @@ function toggleWishlist(productId) {
 
 // Comparison functionality
 function toggleCompare(productId) {
-    const product = window.productsData.find(p => p.id === productId);
+    const product = (window.products || products).find(p => p.id === productId);
     if (!product) return;
     
     const existingIndex = comparison.findIndex(item => item.id === productId);
@@ -1575,7 +1575,7 @@ function performSearch(query) {
         return;
     }
     
-    const results = window.productsData.filter(product => 
+    const results = (window.products || products).filter(product => 
         product.name.toLowerCase().includes(query.toLowerCase()) ||
         product.description.toLowerCase().includes(query.toLowerCase()) ||
         product.category.toLowerCase().includes(query.toLowerCase())
