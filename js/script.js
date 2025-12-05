@@ -45,22 +45,62 @@ function createProductCard(product) {
     card.className = 'product-card';
     card.dataset.category = product.category;
     
+    const isInWishlist = wishlist.some(item => item.id === product.id);
+    const isInComparison = comparison.some(item => item.id === product.id);
+    
+    // Determine availability status and styling
+    const availabilityClass = getAvailabilityClass(product.availability);
+    const availabilityText = getAvailabilityText(product.availability, product.stockCount);
+    const canAddToCart = product.availability === 'in-stock' || product.availability === 'low-stock';
+    
     card.innerHTML = `
         <div class="product-image">
             <i class="fas ${product.icon}"></i>
+            <div class="availability-badge ${availabilityClass}">
+                ${availabilityText}
+            </div>
+            <div class="product-overlay">
+                <button class="product-action-btn quick-view-btn" onclick="openProductModal(${product.id})" title="Quick View">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="product-action-btn wishlist-btn ${isInWishlist ? 'active' : ''}" onclick="toggleWishlist(${product.id})" title="Add to Wishlist">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <button class="product-action-btn compare-btn ${isInComparison ? 'active' : ''}" onclick="toggleCompare(${product.id})" title="Compare">
+                    <i class="fas fa-balance-scale"></i>
+                </button>
+            </div>
         </div>
         <div class="product-info">
             <span class="product-category">${getCategoryName(product.category)}</span>
             <h3>${product.name}</h3>
+            <div class="product-code">Item Code: ${product.itemCode}</div>
+            <div class="product-rating">
+                <div class="stars">
+                    ${generateStars(product.rating || 4.5)}
+                </div>
+                <span class="rating-count">(${product.reviewCount || Math.floor(Math.random() * 200) + 50})</span>
+            </div>
             <p>${product.description}</p>
+            <div class="availability-info ${availabilityClass}">
+                <i class="fas ${getAvailabilityIcon(product.availability)}"></i>
+                <span>${availabilityText}</span>
+                ${product.stockCount > 0 && product.availability !== 'discontinued' ? `<span class="stock-count">(${product.stockCount} available)</span>` : ''}
+            </div>
             <div class="product-footer">
-                <div>
+                <div class="price-container">
                     <div class="product-price">$${product.price.toFixed(2)}</div>
                     ${isMember ? `<div class="wholesale-price">Member: $${product.wholesalePrice.toFixed(2)}</div>` : ''}
+                    ${isMember ? `<div class="savings">Save $${(product.price - product.wholesalePrice).toFixed(2)}</div>` : ''}
                 </div>
-                <button class="add-to-cart" onclick="addToCart(${product.id})">
-                    <i class="fas fa-cart-plus"></i> Add
-                </button>
+                ${canAddToCart ? 
+                    `<button class="add-to-cart" onclick="addToCart(${product.id})">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>` :
+                    `<button class="add-to-cart disabled" disabled>
+                        <i class="fas fa-ban"></i> ${product.availability === 'pre-order' ? 'Pre-Order' : 'Unavailable'}
+                    </button>`
+                }
             </div>
         </div>
     `;
@@ -1047,6 +1087,661 @@ function showGuestRequestForm(productName, requestType) {
         }
     });
 }
+
+// Global variables for new features
+let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+let comparison = JSON.parse(localStorage.getItem('comparison')) || [];
+
+// Generate star rating HTML
+function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    let starsHtml = '';
+    
+    for (let i = 0; i < fullStars; i++) {
+        starsHtml += '<i class="fas fa-star"></i>';
+    }
+    
+    if (hasHalfStar) {
+        starsHtml += '<i class="fas fa-star-half-alt"></i>';
+    }
+    
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    for (let i = 0; i < emptyStars; i++) {
+        starsHtml += '<i class="far fa-star"></i>';
+    }
+    
+    return starsHtml;
+}
+
+// Availability helper functions
+function getAvailabilityClass(availability) {
+    const classes = {
+        'in-stock': 'in-stock',
+        'low-stock': 'low-stock',
+        'out-of-stock': 'out-of-stock',
+        'discontinued': 'discontinued',
+        'pre-order': 'pre-order'
+    };
+    return classes[availability] || 'unknown';
+}
+
+function getAvailabilityText(availability, stockCount) {
+    const texts = {
+        'in-stock': 'In Stock',
+        'low-stock': 'Low Stock',
+        'out-of-stock': 'Out of Stock',
+        'discontinued': 'Discontinued',
+        'pre-order': 'Pre-Order'
+    };
+    return texts[availability] || 'Unknown';
+}
+
+function getAvailabilityIcon(availability) {
+    const icons = {
+        'in-stock': 'fa-check-circle',
+        'low-stock': 'fa-exclamation-triangle',
+        'out-of-stock': 'fa-times-circle',
+        'discontinued': 'fa-ban',
+        'pre-order': 'fa-clock'
+    };
+    return icons[availability] || 'fa-question-circle';
+}
+
+// Product Quick View Modal
+function openProductModal(productId) {
+    const product = window.productsData.find(p => p.id === productId);
+    if (!product) return;
+    
+    const modal = document.getElementById('productModal');
+    const price = isMember ? product.wholesalePrice : product.price;
+    const savings = product.price - product.wholesalePrice;
+    
+    document.getElementById('productModalTitle').textContent = product.name;
+    document.getElementById('productModalName').textContent = product.name;
+    document.getElementById('productModalCategory').textContent = getCategoryName(product.category);
+    document.getElementById('productModalPrice').textContent = `$${price.toFixed(2)}`;
+    document.getElementById('productModalDescription').textContent = product.description;
+    document.getElementById('productModalIcon').className = `fas ${product.icon}`;
+    
+    if (isMember) {
+        document.getElementById('productModalMemberPrice').style.display = 'block';
+        document.getElementById('productModalMemberPrice').textContent = `Member: $${product.wholesalePrice.toFixed(2)}`;
+        document.getElementById('productModalSavings').style.display = 'block';
+        document.getElementById('productModalSavings').textContent = `You save: $${savings.toFixed(2)} (${Math.round(savings/product.price*100)}%)`;
+    }
+    
+    // Update modal buttons
+    const addToCartBtn = document.getElementById('addToCartModal');
+    addToCartBtn.onclick = () => {
+        const quantity = parseInt(document.getElementById('modalQuantity').value);
+        for (let i = 0; i < quantity; i++) {
+            addToCart(productId);
+        }
+        modal.classList.remove('active');
+        showNotification('Product added to cart!');
+    };
+    
+    const wishlistBtn = document.getElementById('addToWishlistModal');
+    const isInWishlist = wishlist.some(item => item.id === productId);
+    wishlistBtn.className = `btn btn-outline wishlist-btn ${isInWishlist ? 'active' : ''}`;
+    wishlistBtn.onclick = () => toggleWishlist(productId);
+    
+    const compareBtn = document.getElementById('addToCompareModal');
+    const isInComparison = comparison.some(item => item.id === productId);
+    compareBtn.className = `btn btn-outline compare-btn ${isInComparison ? 'active' : ''}`;
+    compareBtn.onclick = () => toggleCompare(productId);
+    
+    modal.classList.add('active');
+}
+
+// Quantity change for modal
+function changeQuantity(change) {
+    const quantityInput = document.getElementById('modalQuantity');
+    const currentValue = parseInt(quantityInput.value);
+    const newValue = Math.max(1, Math.min(10, currentValue + change));
+    quantityInput.value = newValue;
+}
+
+// Wishlist functionality
+function toggleWishlist(productId) {
+    const product = window.productsData.find(p => p.id === productId);
+    if (!product) return;
+    
+    const existingIndex = wishlist.findIndex(item => item.id === productId);
+    
+    if (existingIndex > -1) {
+        wishlist.splice(existingIndex, 1);
+        showNotification('Removed from wishlist');
+    } else {
+        wishlist.push({
+            id: product.id,
+            name: product.name,
+            price: isMember ? product.wholesalePrice : product.price,
+            icon: product.icon,
+            category: product.category
+        });
+        showNotification('Added to wishlist!');
+    }
+    
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    updateWishlistUI();
+    updateProductCards();
+}
+
+// Comparison functionality
+function toggleCompare(productId) {
+    const product = window.productsData.find(p => p.id === productId);
+    if (!product) return;
+    
+    const existingIndex = comparison.findIndex(item => item.id === productId);
+    
+    if (existingIndex > -1) {
+        comparison.splice(existingIndex, 1);
+        showNotification('Removed from comparison');
+    } else {
+        if (comparison.length >= 3) {
+            showNotification('You can only compare up to 3 products');
+            return;
+        }
+        comparison.push({
+            id: product.id,
+            name: product.name,
+            price: isMember ? product.wholesalePrice : product.price,
+            icon: product.icon,
+            category: product.category,
+            description: product.description
+        });
+        showNotification('Added to comparison!');
+    }
+    
+    localStorage.setItem('comparison', JSON.stringify(comparison));
+    updateComparisonUI();
+    updateProductCards();
+}
+
+// Update wishlist UI
+function updateWishlistUI() {
+    const wishlistCount = document.getElementById('wishlistCount');
+    const wishlistBadge = document.getElementById('wishlistBadge');
+    const wishlistItems = document.getElementById('wishlistItems');
+    
+    wishlistCount.textContent = wishlist.length;
+    
+    if (wishlist.length > 0) {
+        wishlistBadge.textContent = wishlist.length;
+        wishlistBadge.style.display = 'block';
+        
+        wishlistItems.innerHTML = wishlist.map(item => `
+            <div class="wishlist-item">
+                <div class="wishlist-item-icon">
+                    <i class="fas ${item.icon}"></i>
+                </div>
+                <div class="wishlist-item-info">
+                    <h4>${item.name}</h4>
+                    <span class="wishlist-item-price">$${item.price.toFixed(2)}</span>
+                </div>
+                <div class="wishlist-item-actions">
+                    <button onclick="addToCart(${item.id})" class="btn btn-sm btn-primary">
+                        <i class="fas fa-cart-plus"></i>
+                    </button>
+                    <button onclick="toggleWishlist(${item.id})" class="btn btn-sm btn-outline">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    } else {
+        wishlistBadge.style.display = 'none';
+        wishlistItems.innerHTML = `
+            <div class="empty-wishlist-message">
+                <i class="fas fa-heart"></i>
+                <p>Your wishlist is empty</p>
+                <p class="subtitle">Save products you love!</p>
+            </div>
+        `;
+    }
+}
+
+// Update comparison UI
+function updateComparisonUI() {
+    const compareBadge = document.getElementById('compareBadge');
+    const comparisonTable = document.getElementById('comparisonTable');
+    
+    if (comparison.length > 0) {
+        compareBadge.textContent = comparison.length;
+        compareBadge.style.display = 'block';
+        
+        comparisonTable.innerHTML = `
+            <div class="comparison-header">
+                <h4>Comparing ${comparison.length} Products</h4>
+                <button onclick="clearComparison()" class="btn btn-outline btn-sm">Clear All</button>
+            </div>
+            <div class="comparison-grid">
+                ${comparison.map(item => `
+                    <div class="comparison-item">
+                        <div class="comparison-item-image">
+                            <i class="fas ${item.icon}"></i>
+                        </div>
+                        <h4>${item.name}</h4>
+                        <div class="comparison-price">$${item.price.toFixed(2)}</div>
+                        <p>${item.description}</p>
+                        <div class="comparison-actions">
+                            <button onclick="addToCart(${item.id})" class="btn btn-primary btn-sm">Add to Cart</button>
+                            <button onclick="toggleCompare(${item.id})" class="btn btn-outline btn-sm">Remove</button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    } else {
+        compareBadge.style.display = 'none';
+        comparisonTable.innerHTML = `
+            <div class="comparison-empty">
+                <i class="fas fa-balance-scale"></i>
+                <p>No products to compare yet</p>
+                <p class="subtitle">Add products to comparison to see them here</p>
+            </div>
+        `;
+    }
+}
+
+// Clear comparison
+function clearComparison() {
+    comparison = [];
+    localStorage.setItem('comparison', JSON.stringify(comparison));
+    updateComparisonUI();
+    updateProductCards();
+    showNotification('Comparison cleared');
+}
+
+// Search functionality
+let searchTimeout;
+function setupSearch() {
+    const searchBtn = document.getElementById('searchBtn');
+    const searchOverlay = document.getElementById('searchOverlay');
+    const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+    const closeSearch = document.getElementById('closeSearch');
+    const searchResults = document.getElementById('searchResults');
+    
+    searchBtn.addEventListener('click', () => {
+        searchOverlay.classList.add('active');
+        searchInput.focus();
+    });
+    
+    closeSearch.addEventListener('click', () => {
+        searchOverlay.classList.remove('active');
+        searchInput.value = '';
+        searchClear.style.display = 'none';
+    });
+    
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+        
+        if (query.length > 0) {
+            searchClear.style.display = 'block';
+        } else {
+            searchClear.style.display = 'none';
+        }
+        
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            performSearch(query);
+        }, 300);
+    });
+    
+    searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClear.style.display = 'none';
+        searchInput.focus();
+        showSearchSuggestions();
+    });
+    
+    // Search suggestions
+    document.querySelectorAll('.suggestion-tag').forEach(tag => {
+        tag.addEventListener('click', () => {
+            searchInput.value = tag.dataset.search;
+            performSearch(tag.dataset.search);
+        });
+    });
+    
+    // Category links
+    document.querySelectorAll('.category-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const category = link.dataset.category;
+            searchOverlay.classList.remove('active');
+            
+            // Filter products by category
+            document.querySelector(`[data-filter="${category}"]`).click();
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+}
+
+function performSearch(query) {
+    if (!query) {
+        showSearchSuggestions();
+        return;
+    }
+    
+    const results = window.productsData.filter(product => 
+        product.name.toLowerCase().includes(query.toLowerCase()) ||
+        product.description.toLowerCase().includes(query.toLowerCase()) ||
+        product.category.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    displaySearchResults(results, query);
+}
+
+function showSearchSuggestions() {
+    document.getElementById('searchResults').innerHTML = `
+        <div class="search-suggestions">
+            <h4>Popular Searches</h4>
+            <div class="suggestion-tags">
+                <span class="suggestion-tag" data-search="serum">Face Serum</span>
+                <span class="suggestion-tag" data-search="vitamins">Vitamins</span>
+                <span class="suggestion-tag" data-search="moisturizer">Moisturizer</span>
+                <span class="suggestion-tag" data-search="cleanser">Cleanser</span>
+                <span class="suggestion-tag" data-search="supplements">Supplements</span>
+            </div>
+        </div>
+        <div class="search-categories">
+            <h4>Shop by Category</h4>
+            <div class="category-links">
+                <a href="#" class="category-link" data-category="beauty">
+                    <i class="fas fa-sparkles"></i>
+                    <span>Beauty Products</span>
+                </a>
+                <a href="#" class="category-link" data-category="vitamins">
+                    <i class="fas fa-pills"></i>
+                    <span>Vitamins & Supplements</span>
+                </a>
+                <a href="#" class="category-link" data-category="personal">
+                    <i class="fas fa-pump-soap"></i>
+                    <span>Personal Care</span>
+                </a>
+                <a href="#" class="category-link" data-category="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home Care</span>
+                </a>
+            </div>
+        </div>
+    `;
+    
+    // Re-bind events
+    document.querySelectorAll('.suggestion-tag').forEach(tag => {
+        tag.addEventListener('click', () => {
+            document.getElementById('searchInput').value = tag.dataset.search;
+            performSearch(tag.dataset.search);
+        });
+    });
+    
+    document.querySelectorAll('.category-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const category = link.dataset.category;
+            document.getElementById('searchOverlay').classList.remove('active');
+            document.querySelector(`[data-filter="${category}"]`).click();
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+}
+
+function displaySearchResults(results, query) {
+    const searchResults = document.getElementById('searchResults');
+    
+    if (results.length === 0) {
+        searchResults.innerHTML = `
+            <div class="search-no-results">
+                <i class="fas fa-search"></i>
+                <h4>No results found for "${query}"</h4>
+                <p>Try different keywords or browse our categories</p>
+            </div>
+        `;
+        return;
+    }
+    
+    searchResults.innerHTML = `
+        <div class="search-results-header">
+            <h4>Found ${results.length} products for "${query}"</h4>
+        </div>
+        <div class="search-results-grid">
+            ${results.map(product => `
+                <div class="search-result-item" onclick="openProductModal(${product.id})">
+                    <div class="search-result-icon">
+                        <i class="fas ${product.icon}"></i>
+                    </div>
+                    <div class="search-result-info">
+                        <h5>${product.name}</h5>
+                        <p>${product.description}</p>
+                        <div class="search-result-price">
+                            $${(isMember ? product.wholesalePrice : product.price).toFixed(2)}
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+// Cart Sidebar functionality
+function setupCartSidebar() {
+    const cartBtn = document.getElementById('cartBtn');
+    const cartSidebar = document.getElementById('cartSidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
+    
+    cartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        cartSidebar.classList.add('active');
+        updateCartSidebar();
+    });
+    
+    closeSidebar.addEventListener('click', () => {
+        cartSidebar.classList.remove('active');
+    });
+    
+    // Close on overlay click
+    cartSidebar.addEventListener('click', (e) => {
+        if (e.target === cartSidebar) {
+            cartSidebar.classList.remove('active');
+        }
+    });
+}
+
+function updateCartSidebar() {
+    const sidebarCartItems = document.getElementById('sidebarCartItems');
+    const sidebarCartCount = document.getElementById('sidebarCartCount');
+    const sidebarFooter = document.getElementById('sidebarFooter');
+    const sidebarSubtotal = document.getElementById('sidebarSubtotal');
+    const sidebarTotal = document.getElementById('sidebarTotal');
+    
+    sidebarCartCount.textContent = cart.length;
+    
+    if (cart.length === 0) {
+        sidebarCartItems.innerHTML = `
+            <div class="empty-cart-message">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+                <p class="subtitle">Add some products to get started!</p>
+            </div>
+        `;
+        sidebarFooter.style.display = 'none';
+        return;
+    }
+    
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    sidebarCartItems.innerHTML = cart.map(item => `
+        <div class="cart-sidebar-item">
+            <div class="cart-item-icon">
+                <i class="fas ${item.icon}"></i>
+            </div>
+            <div class="cart-item-info">
+                <h4>${item.name}</h4>
+                <div class="cart-item-quantity">
+                    <button onclick="updateCartQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="updateCartQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                </div>
+            </div>
+            <div class="cart-item-price">
+                <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                <button onclick="removeFromCart(${item.id})" class="remove-item">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+    
+    sidebarSubtotal.textContent = `$${total.toFixed(2)}`;
+    sidebarTotal.textContent = `$${total.toFixed(2)}`;
+    sidebarFooter.style.display = 'block';
+}
+
+function updateCartQuantity(productId, newQuantity) {
+    if (newQuantity <= 0) {
+        removeFromCart(productId);
+        return;
+    }
+    
+    const item = cart.find(item => item.id === productId);
+    if (item) {
+        item.quantity = newQuantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        updateCartSidebar();
+    }
+}
+
+// Floating Action Buttons
+function setupFloatingButtons() {
+    const wishlistFloat = document.getElementById('wishlistFloat');
+    const compareFloat = document.getElementById('compareFloat');
+    const scrollTop = document.getElementById('scrollTop');
+    
+    wishlistFloat.addEventListener('click', () => {
+        document.getElementById('wishlistSidebar').classList.add('active');
+        updateWishlistUI();
+    });
+    
+    compareFloat.addEventListener('click', () => {
+        document.getElementById('compareModal').classList.add('active');
+        updateComparisonUI();
+    });
+    
+    scrollTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Show/hide scroll to top button
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            scrollTop.classList.add('visible');
+        } else {
+            scrollTop.classList.remove('visible');
+        }
+    });
+}
+
+// Update product cards to reflect wishlist and comparison status
+function updateProductCards() {
+    document.querySelectorAll('.product-card').forEach(card => {
+        const productId = parseInt(card.querySelector('.add-to-cart').getAttribute('onclick').match(/\d+/)[0]);
+        
+        const wishlistBtn = card.querySelector('.wishlist-btn');
+        const compareBtn = card.querySelector('.compare-btn');
+        
+        if (wishlistBtn) {
+            const isInWishlist = wishlist.some(item => item.id === productId);
+            wishlistBtn.classList.toggle('active', isInWishlist);
+        }
+        
+        if (compareBtn) {
+            const isInComparison = comparison.some(item => item.id === productId);
+            compareBtn.classList.toggle('active', isInComparison);
+        }
+    });
+}
+
+// Enhanced setup event listeners
+function setupEnhancedEventListeners() {
+    setupSearch();
+    setupCartSidebar();
+    setupFloatingButtons();
+    
+    // Close wishlist sidebar
+    document.getElementById('closeWishlist').addEventListener('click', () => {
+        document.getElementById('wishlistSidebar').classList.remove('active');
+    });
+    
+    // Initialize UI
+    updateWishlistUI();
+    updateComparisonUI();
+}
+
+// Smooth scroll animations and intersection observer
+function setupScrollAnimations() {
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in-up');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for animations
+    const animateElements = document.querySelectorAll('.product-card, .category-card, .membership-card, .upcoming-card, .stat');
+    animateElements.forEach(el => observer.observe(el));
+    
+    // Parallax effect for hero section
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            const rate = scrolled * -0.5;
+            hero.style.transform = `translateY(${rate}px)`;
+        }
+    });
+}
+
+// Initialize enhanced features
+document.addEventListener('DOMContentLoaded', function() {
+    setupEnhancedEventListeners();
+    setupScrollAnimations();
+});
+
+// Make functions available globally
+window.openProductModal = openProductModal;
+window.changeQuantity = changeQuantity;
+window.toggleWishlist = toggleWishlist;
+window.toggleCompare = toggleCompare;
+window.clearComparison = clearComparison;
+window.updateCartQuantity = updateCartQuantity;
 
 // Make addToCart and removeFromCart available globally
 window.addToCart = addToCart;

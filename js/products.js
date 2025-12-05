@@ -8,7 +8,12 @@ const products = [
         price: 49.99,
         wholesalePrice: 34.99,
         description: "Intensive hydration serum with hyaluronic acid",
-        icon: "fa-tint"
+        icon: "fa-tint",
+        rating: 4.8,
+        reviewCount: 234,
+        itemCode: "MIG-HS-001",
+        availability: "in-stock",
+        stockCount: 45
     },
     {
         id: 2,
@@ -17,7 +22,12 @@ const products = [
         price: 59.99,
         wholesalePrice: 41.99,
         description: "Rich night cream with retinol and peptides",
-        icon: "fa-moon"
+        icon: "fa-moon",
+        rating: 4.6,
+        reviewCount: 189,
+        itemCode: "MIG-NC-002",
+        availability: "in-stock",
+        stockCount: 28
     },
     {
         id: 3,
@@ -26,7 +36,12 @@ const products = [
         price: 39.99,
         wholesalePrice: 27.99,
         description: "Illuminating face mask with vitamin C",
-        icon: "fa-star"
+        icon: "fa-star",
+        rating: 4.7,
+        reviewCount: 156,
+        itemCode: "MIG-VM-003",
+        availability: "low-stock",
+        stockCount: 8
     },
     {
         id: 4,
@@ -35,7 +50,12 @@ const products = [
         price: 29.99,
         wholesalePrice: 20.99,
         description: "Set of 3 nourishing lip glosses",
-        icon: "fa-kiss"
+        icon: "fa-kiss",
+        rating: 4.5,
+        reviewCount: 98,
+        itemCode: "MIG-LG-004",
+        availability: "out-of-stock",
+        stockCount: 0
     },
     {
         id: 5,
@@ -44,7 +64,12 @@ const products = [
         price: 44.99,
         wholesalePrice: 31.49,
         description: "Long-lasting matte finish foundation",
-        icon: "fa-palette"
+        icon: "fa-palette",
+        rating: 4.4,
+        reviewCount: 167,
+        itemCode: "MIG-MF-005",
+        availability: "in-stock",
+        stockCount: 32
     },
     {
         id: 6,
@@ -53,7 +78,12 @@ const products = [
         price: 54.99,
         wholesalePrice: 38.49,
         description: "12 colors professional eye shadow palette",
-        icon: "fa-eye"
+        icon: "fa-eye",
+        rating: 4.9,
+        reviewCount: 312,
+        itemCode: "MIG-EP-006",
+        availability: "discontinued",
+        stockCount: 0
     },
 
     // Vitamins & Supplements
@@ -64,7 +94,12 @@ const products = [
         price: 34.99,
         wholesalePrice: 24.49,
         description: "Daily multivitamin with essential nutrients",
-        icon: "fa-capsules"
+        icon: "fa-capsules",
+        rating: 4.6,
+        reviewCount: 287,
+        itemCode: "NAT-MV-007",
+        availability: "in-stock",
+        stockCount: 67
     },
     {
         id: 8,
@@ -73,7 +108,12 @@ const products = [
         price: 29.99,
         wholesalePrice: 20.99,
         description: "Premium omega-3 fatty acids supplement",
-        icon: "fa-fish"
+        icon: "fa-fish",
+        rating: 4.7,
+        reviewCount: 198,
+        itemCode: "NAT-FO-008",
+        availability: "in-stock",
+        stockCount: 89
     },
     {
         id: 9,
@@ -82,7 +122,12 @@ const products = [
         price: 24.99,
         wholesalePrice: 17.49,
         description: "Bone health support formula",
-        icon: "fa-bone"
+        icon: "fa-bone",
+        rating: 4.5,
+        reviewCount: 143,
+        itemCode: "NAT-VD-009",
+        availability: "low-stock",
+        stockCount: 12
     },
     {
         id: 10,
@@ -91,7 +136,12 @@ const products = [
         price: 39.99,
         wholesalePrice: 27.99,
         description: "Digestive health probiotic blend",
-        icon: "fa-heartbeat"
+        icon: "fa-heartbeat",
+        rating: 4.8,
+        reviewCount: 201,
+        itemCode: "NAT-PC-010",
+        availability: "in-stock",
+        stockCount: 54
     },
     {
         id: 11,
@@ -100,7 +150,12 @@ const products = [
         price: 44.99,
         wholesalePrice: 31.49,
         description: "Skin, hair, and nail support",
-        icon: "fa-hand-sparkles"
+        icon: "fa-hand-sparkles",
+        rating: 4.6,
+        reviewCount: 176,
+        itemCode: "NAT-CP-011",
+        availability: "pre-order",
+        stockCount: 0
     },
     {
         id: 12,
@@ -108,6 +163,13 @@ const products = [
         category: "vitamins",
         price: 19.99,
         wholesalePrice: 13.99,
+        description: "Energy and metabolism support",
+        icon: "fa-bolt",
+        rating: 4.3,
+        reviewCount: 134,
+        itemCode: "NAT-BC-012",
+        availability: "in-stock",
+        stockCount: 78
         description: "Energy and metabolism support",
         icon: "fa-bolt"
     },

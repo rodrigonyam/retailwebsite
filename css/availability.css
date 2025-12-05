@@ -1,0 +1,94 @@
+/* Availability Badge Styles */
+.availability-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.availability-badge.in-stock {
+    background: #28a745;
+    color: white;
+}
+
+.availability-badge.low-stock {
+    background: #ffc107;
+    color: #212529;
+}
+
+.availability-badge.out-of-stock {
+    background: #dc3545;
+    color: white;
+}
+
+.availability-badge.discontinued {
+    background: #6c757d;
+    color: white;
+}
+
+.availability-badge.pre-order {
+    background: #17a2b8;
+    color: white;
+}
+
+/* Product Code Styles */
+.product-code {
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-family: 'Courier New', monospace;
+    margin: 0.25rem 0;
+    font-weight: 500;
+}
+
+/* Availability Info Styles */
+.availability-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.availability-info.in-stock {
+    color: #28a745;
+}
+
+.availability-info.low-stock {
+    color: #ffc107;
+}
+
+.availability-info.out-of-stock {
+    color: #dc3545;
+}
+
+.availability-info.discontinued {
+    color: #6c757d;
+}
+
+.availability-info.pre-order {
+    color: #17a2b8;
+}
+
+.stock-count {
+    font-weight: normal;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Enhanced Add to Cart Button */
+.add-to-cart.disabled {
+    background: #6c757d !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.add-to-cart.disabled:hover {
+    background: #6c757d !important;
+    transform: none;
+}
