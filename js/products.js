@@ -539,6 +539,26 @@ const products = [
     }
 ];
 
-// Export products for use in main script
-window.products = products;
-window.productsData = products;
+// Export products for use in main script (robust for GitHub Pages)
+(function() {
+    'use strict';
+    
+    // Ensure window object exists
+    if (typeof window !== 'undefined') {
+        window.products = products;
+        window.productsData = products;
+        
+        // Also make it available globally
+        if (typeof global !== 'undefined') {
+            global.products = products;
+        }
+        
+        console.log('Products loaded:', products.length, 'items');
+        
+        // Dispatch a custom event to notify that products are ready
+        if (typeof CustomEvent !== 'undefined') {
+            const event = new CustomEvent('productsLoaded', { detail: products });
+            window.dispatchEvent(event);
+        }
+    }
+})();

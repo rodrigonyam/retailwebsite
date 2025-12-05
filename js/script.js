@@ -17,19 +17,64 @@ function viewProduct(productId) {
 
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
-    // Small delay to ensure products.js is fully loaded
+    // Ensure everything is ready before initializing
+    if (document.readyState === 'loading') {
+        // Still loading, wait for it to complete
+        document.addEventListener('DOMContentLoaded', initializeWebsite);
+    } else {
+        // Already loaded
+        initializeWebsite();
+    }
+});
+
+// Also initialize when window loads (backup)
+window.addEventListener('load', function() {
+    if (!window.websiteInitialized) {
+        initializeWebsite();
+    }
+});
+
+function initializeWebsite() {
+    console.log('Initializing website...');
+    window.websiteInitialized = true;
+    
+    // Listen for products loaded event
+    window.addEventListener('productsLoaded', function(event) {
+        console.log('Products loaded event received:', event.detail.length, 'products');
+        displayProducts(currentFilter);
+    });
+    
+    // Wait a bit more for GitHub Pages
     setTimeout(() => {
         initializeProducts();
         updateCartCount();
         setupEventListeners();
         updateUserInterface();
-    }, 100);
-});
+    }, 200);
+}
 
 // Initialize products display
 function initializeProducts() {
     console.log('Initializing products...', window.products, window.productsData);
+    
+    // Check if products are available
+    if (!window.products && !window.productsData) {
+        console.log('Products not yet loaded, retrying...');
+        // Retry after a short delay
+        setTimeout(initializeProducts, 500);
+        return;
+    }
+    
     displayProducts(currentFilter);
+    
+    // Set up a periodic check to ensure products remain visible
+    setTimeout(() => {
+        const productGrid = document.getElementById('productGrid');
+        if (productGrid && productGrid.children.length === 0) {
+            console.log('Products disappeared, reloading...');
+            displayProducts(currentFilter);
+        }
+    }, 1000);
 }
 
 // Display products based on filter
