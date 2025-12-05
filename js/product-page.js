@@ -62,7 +62,7 @@ function updateProductImage() {
     
     // Update availability badge
     const availabilityClass = getAvailabilityClass(currentProduct.availability);
-    const availabilityTextContent = getAvailabilityText(currentProduct.availability, currentProduct.stockCount);
+    const availabilityTextContent = getAvailabilityText(currentProduct.availability, currentProduct.stockCount, currentProduct.expectedDate);
     
     availabilityBadge.className = `availability-badge ${availabilityClass}`;
     availabilityText.textContent = availabilityTextContent;
@@ -252,7 +252,7 @@ function loadRelatedProducts() {
         const isInWishlist = wishlist.some(item => item.id === product.id);
         const isInComparison = comparison.some(item => item.id === product.id);
         const availabilityClass = getAvailabilityClass(product.availability);
-        const availabilityText = getAvailabilityText(product.availability, product.stockCount);
+        const availabilityText = getAvailabilityText(product.availability, product.stockCount, product.expectedDate);
         const canAddToCart = product.availability === 'in-stock' || product.availability === 'low-stock';
         
         return `
@@ -289,6 +289,7 @@ function loadRelatedProducts() {
                         <i class="fas ${getAvailabilityIcon(product.availability)}"></i>
                         <span>${availabilityText}</span>
                         ${product.stockCount > 0 && product.availability !== 'discontinued' ? `<span class="stock-count">(${product.stockCount} available)</span>` : ''}
+                        ${product.expectedDate && (product.availability === 'out-of-stock' || product.availability === 'pre-order' || product.availability === 'discontinued') ? `<div class="expected-date"><i class="fas fa-calendar-alt"></i> Expected: ${new Date(product.expectedDate).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})}</div>` : ''}
                     </div>
                     <div class="product-footer">
                         <div class="product-price">

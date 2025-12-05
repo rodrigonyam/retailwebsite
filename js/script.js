@@ -55,7 +55,7 @@ function createProductCard(product) {
     
     // Determine availability status and styling
     const availabilityClass = getAvailabilityClass(product.availability);
-    const availabilityText = getAvailabilityText(product.availability, product.stockCount);
+    const availabilityText = getAvailabilityText(product.availability, product.stockCount, product.expectedDate);
     const canAddToCart = product.availability === 'in-stock' || product.availability === 'low-stock';
     
     card.innerHTML = `
@@ -91,6 +91,7 @@ function createProductCard(product) {
                 <i class="fas ${getAvailabilityIcon(product.availability)}"></i>
                 <span>${availabilityText}</span>
                 ${product.stockCount > 0 && product.availability !== 'discontinued' ? `<span class="stock-count">(${product.stockCount} available)</span>` : ''}
+                ${product.expectedDate && (product.availability === 'out-of-stock' || product.availability === 'pre-order' || product.availability === 'discontinued') ? `<div class="expected-date"><i class="fas fa-calendar-alt"></i> Expected: ${new Date(product.expectedDate).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})}</div>` : ''}
             </div>
             <div class="product-footer">
                 <div class="price-container">

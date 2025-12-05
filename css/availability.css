@@ -53,6 +53,7 @@
     margin: 0.5rem 0;
     font-size: 0.85rem;
     font-weight: 600;
+    flex-wrap: wrap;
 }
 
 .availability-info.in-stock {
@@ -79,6 +80,27 @@
     font-weight: normal;
     color: #666;
     font-size: 0.8rem;
+}
+
+/* Expected date styling */
+.expected-date {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 0.3rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(0,0,0,0.05);
+    border-radius: 12px;
+    width: 100%;
+    font-weight: 500;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.expected-date i {
+    color: var(--primary-color, #007bff);
+    font-size: 0.7rem;
 }
 
 /* Enhanced Add to Cart Button */

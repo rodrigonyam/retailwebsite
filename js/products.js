@@ -11,7 +11,7 @@ const products = [
         icon: "fa-tint",
         rating: 4.8,
         reviewCount: 234,
-        itemCode: "MIG-HS-001",
+        itemCode: "20001B",
         availability: "in-stock",
         stockCount: 45,
         detailedDescription: "Transform your skin with our advanced hydrating face serum. This lightweight, fast-absorbing formula penetrates deep into the skin layers to provide long-lasting moisture and improve skin texture. Clinically tested and dermatologist approved for all skin types.",
@@ -60,7 +60,7 @@ const products = [
         icon: "fa-moon",
         rating: 4.6,
         reviewCount: 189,
-        itemCode: "MIG-NC-002",
+        itemCode: "20002B",
         availability: "in-stock",
         stockCount: 28,
         detailedDescription: "Rejuvenate your skin overnight with our premium anti-aging night cream. This luxurious formula combines powerful retinol with peptides to target signs of aging while you sleep. Wake up to visibly smoother, firmer, and more youthful-looking skin.",
@@ -109,7 +109,7 @@ const products = [
         icon: "fa-star",
         rating: 4.7,
         reviewCount: 156,
-        itemCode: "MIG-VM-003",
+        itemCode: "20003B",
         availability: "low-stock",
         stockCount: 8,
         detailedDescription: "Revitalize and brighten your complexion with our Vitamin C Brightening Mask. This powerful treatment mask is formulated with stable vitamin C and natural brightening agents to even out skin tone and restore radiance in just 15 minutes.",
@@ -154,13 +154,14 @@ const products = [
         category: "beauty",
         price: 29.99,
         wholesalePrice: 20.99,
-        description: "Set of 3 nourishing lip glosses",
-        icon: "fa-kiss",
+        description: "5 shades natural lip gloss collection",
+        icon: "fa-lips",
         rating: 4.5,
-        reviewCount: 98,
-        itemCode: "MIG-LG-004",
+        reviewCount: 178,
+        itemCode: "20004B",
         availability: "out-of-stock",
-        stockCount: 0
+        stockCount: 0,
+        expectedDate: "2025-12-28"
     },
     {
         id: 5,
@@ -172,9 +173,10 @@ const products = [
         icon: "fa-palette",
         rating: 4.4,
         reviewCount: 167,
-        itemCode: "MIG-MF-005",
-        availability: "in-stock",
-        stockCount: 32
+        itemCode: "20005B",
+        availability: "out-of-stock",
+        stockCount: 0,
+        expectedDate: "2025-01-05"
     },
     {
         id: 6,
@@ -186,9 +188,10 @@ const products = [
         icon: "fa-eye",
         rating: 4.9,
         reviewCount: 312,
-        itemCode: "MIG-EP-006",
-        availability: "discontinued",
-        stockCount: 0
+        itemCode: "20006B",
+        availability: "pre-order",
+        stockCount: 0,
+        expectedDate: "2025-01-15"
     },
 
     // Vitamins & Supplements
@@ -202,7 +205,7 @@ const products = [
         icon: "fa-capsules",
         rating: 4.6,
         reviewCount: 287,
-        itemCode: "NAT-MV-007",
+        itemCode: "10001V",
         availability: "in-stock",
         stockCount: 67,
         detailedDescription: "Support your overall health and wellness with our comprehensive multivitamin complex. This carefully formulated supplement provides essential vitamins and minerals that your body needs daily. Perfect for busy lifestyles and ensuring nutritional gaps are filled.",
@@ -270,7 +273,7 @@ const products = [
         icon: "fa-fish",
         rating: 4.7,
         reviewCount: 198,
-        itemCode: "NAT-FO-008",
+        itemCode: "10002V",
         availability: "in-stock",
         stockCount: 89,
         detailedDescription: "Support your cardiovascular and brain health with our premium omega-3 fish oil supplement. Sourced from wild-caught, sustainable fish and molecularly distilled for purity. Each softgel delivers optimal amounts of EPA and DHA for maximum health benefits.",
@@ -327,7 +330,7 @@ const products = [
         icon: "fa-bone",
         rating: 4.5,
         reviewCount: 143,
-        itemCode: "NAT-VD-009",
+        itemCode: "10003V",
         availability: "low-stock",
         stockCount: 12
     },
@@ -341,7 +344,7 @@ const products = [
         icon: "fa-heartbeat",
         rating: 4.8,
         reviewCount: 201,
-        itemCode: "NAT-PC-010",
+        itemCode: "10004V",
         availability: "in-stock",
         stockCount: 54
     },
@@ -355,9 +358,10 @@ const products = [
         icon: "fa-hand-sparkles",
         rating: 4.6,
         reviewCount: 176,
-        itemCode: "NAT-CP-011",
+        itemCode: "10005V",
         availability: "pre-order",
-        stockCount: 0
+        stockCount: 0,
+        expectedDate: "2025-01-08"
     },
     {
         id: 12,
@@ -369,7 +373,7 @@ const products = [
         icon: "fa-bolt",
         rating: 4.3,
         reviewCount: 134,
-        itemCode: "NAT-BC-012",
+        itemCode: "10006V",
         availability: "in-stock",
         stockCount: 78
     },
@@ -382,7 +386,13 @@ const products = [
         price: 24.99,
         wholesalePrice: 17.49,
         description: "Nourishing body lotion with shea butter",
-        icon: "fa-pump-soap"
+        icon: "fa-pump-soap",
+        rating: 4.3,
+        reviewCount: 156,
+        itemCode: "30001P",
+        availability: "out-of-stock",
+        stockCount: 0,
+        expectedDate: "2025-01-20"
     },
     {
         id: 14,
@@ -391,7 +401,13 @@ const products = [
         price: 14.99,
         wholesalePrice: 10.49,
         description: "Deep cleansing activated charcoal soap",
-        icon: "fa-soap"
+        icon: "fa-soap",
+        rating: 4.5,
+        reviewCount: 189,
+        itemCode: "30002P",
+        availability: "out-of-stock",
+        stockCount: 0,
+        expectedDate: "2025-01-18"
     },
     {
         id: 15,
@@ -400,7 +416,12 @@ const products = [
         price: 32.99,
         wholesalePrice: 23.09,
         description: "Natural hair care duo set",
-        icon: "fa-shower"
+        icon: "fa-shower",
+        rating: 4.4,
+        reviewCount: 187,
+        itemCode: "30004P",
+        availability: "in-stock",
+        stockCount: 23
     },
     {
         id: 16,
@@ -409,7 +430,13 @@ const products = [
         price: 18.99,
         wholesalePrice: 13.29,
         description: "Natural aluminum-free deodorant",
-        icon: "fa-spray-can"
+        icon: "fa-spray-can",
+        rating: 4.7,
+        reviewCount: 245,
+        itemCode: "30003P",
+        availability: "pre-order",
+        stockCount: 0,
+        expectedDate: "2025-01-25"
     },
     {
         id: 17,
@@ -418,7 +445,12 @@ const products = [
         price: 26.99,
         wholesalePrice: 18.89,
         description: "Moisturizing hand cream trio",
-        icon: "fa-hands"
+        icon: "fa-hands",
+        rating: 4.5,
+        reviewCount: 164,
+        itemCode: "30005P",
+        availability: "low-stock",
+        stockCount: 7
     },
     {
         id: 18,
@@ -427,7 +459,12 @@ const products = [
         price: 22.99,
         wholesalePrice: 16.09,
         description: "Exfoliating sugar body scrub",
-        icon: "fa-hand-sparkles"
+        icon: "fa-hand-sparkles",
+        rating: 4.6,
+        reviewCount: 201,
+        itemCode: "30006P",
+        availability: "in-stock",
+        stockCount: 34
     },
 
     // Home Care
@@ -438,7 +475,12 @@ const products = [
         price: 16.99,
         wholesalePrice: 11.89,
         description: "Natural multi-surface cleaner",
-        icon: "fa-spray-can"
+        icon: "fa-spray-can",
+        rating: 4.3,
+        reviewCount: 156,
+        itemCode: "40001H",
+        availability: "in-stock",
+        stockCount: 45
     },
     {
         id: 20,
@@ -447,7 +489,12 @@ const products = [
         price: 21.99,
         wholesalePrice: 15.39,
         description: "Eco-friendly laundry detergent pods",
-        icon: "fa-tshirt"
+        icon: "fa-tshirt",
+        rating: 4.6,
+        reviewCount: 203,
+        itemCode: "40002H",
+        availability: "in-stock",
+        stockCount: 67
     },
     {
         id: 21,
@@ -456,7 +503,12 @@ const products = [
         price: 12.99,
         wholesalePrice: 9.09,
         description: "Plant-based dish washing liquid",
-        icon: "fa-utensils"
+        icon: "fa-utensils",
+        rating: 4.7,
+        reviewCount: 189,
+        itemCode: "40003H",
+        availability: "in-stock",
+        stockCount: 89
     },
     {
         id: 22,
