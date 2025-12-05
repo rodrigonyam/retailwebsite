@@ -30,6 +30,9 @@ function loadProductDetails(productId) {
         return;
     }
     
+    // Set body data attribute for category-specific styling
+    document.body.setAttribute('data-product-category', currentProduct.category);
+    
     // Update page title
     document.title = `${currentProduct.name} - HealthyLiving`;
     document.getElementById('product-title').textContent = `${currentProduct.name} - HealthyLiving`;

@@ -1,0 +1,222 @@
+/* Enhanced Product Visual Styles */
+
+/* Beauty Product Specific Styling */
+.product-card[data-category="beauty"] .product-image {
+    background: linear-gradient(135deg, #ffeef8 0%, #f8e6ff 50%, #e6f3ff 100%);
+    position: relative;
+}
+
+.product-card[data-category="beauty"] .product-image::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+    background: radial-gradient(circle at center, rgba(233, 30, 99, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+/* Vitamins Product Specific Styling */
+.product-card[data-category="vitamins"] .product-image {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 50%, #e6ffe6 100%);
+    position: relative;
+}
+
+.product-card[data-category="vitamins"] .product-image::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    right: 20%;
+    bottom: 20%;
+    background: 
+        radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 30%),
+        radial-gradient(circle at 70% 70%, rgba(139, 195, 74, 0.2) 0%, transparent 30%);
+    border-radius: 50%;
+    animation: rotate 8s linear infinite;
+}
+
+/* Personal Care Product Styling */
+.product-card[data-category="personal"] .product-image {
+    background: linear-gradient(135deg, #fff4e6 0%, #ffeaa7 50%, #fdcb6e 100%);
+    position: relative;
+}
+
+.product-card[data-category="personal"] .product-image::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    right: 15%;
+    bottom: 15%;
+    background: linear-gradient(45deg, rgba(255, 152, 0, 0.1) 25%, transparent 25%);
+    background-size: 20px 20px;
+    animation: slide 4s linear infinite;
+}
+
+/* Fitness Product Styling */
+.product-card[data-category="fitness"] .product-image {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+    position: relative;
+}
+
+.product-card[data-category="fitness"] .product-image::after {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    right: 25%;
+    bottom: 25%;
+    background: 
+        linear-gradient(0deg, rgba(33, 150, 243, 0.1) 50%, transparent 50%),
+        linear-gradient(90deg, rgba(3, 169, 244, 0.1) 50%, transparent 50%);
+    background-size: 10px 10px;
+    animation: grid 2s ease-in-out infinite alternate;
+}
+
+/* Enhanced Icon Styling for Each Category */
+.fa-tint, .fa-droplet {
+    position: relative;
+}
+
+.fa-tint::before, .fa-droplet::before {
+    background: linear-gradient(135deg, #64b5f6, #42a5f5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fa-moon::before {
+    background: linear-gradient(135deg, #ab47bc, #8e24aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fa-star::before {
+    background: linear-gradient(135deg, #ffca28, #ffc107);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fa-capsules::before {
+    background: linear-gradient(135deg, #66bb6a, #4caf50);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fa-fish::before {
+    background: linear-gradient(135deg, #29b6f6, #0288d1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fa-bone::before {
+    background: linear-gradient(135deg, #ffa726, #ff9800);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Custom Animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slide {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 20px 20px;
+    }
+}
+
+@keyframes grid {
+    from {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0.4;
+        transform: scale(1.05);
+    }
+}
+
+/* Product Image Hover Effects */
+.product-image {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.product-image:hover {
+    transform: scale(1.08) rotate(2deg);
+}
+
+/* Enhanced Product Card Shadows */
+.product-card {
+    transition: all 0.4s ease;
+}
+
+.product-card:hover {
+    box-shadow: 
+        0 20px 40px rgba(0,0,0,0.1),
+        0 0 0 1px rgba(255,255,255,0.1) inset;
+}
+
+/* Floating Labels for Categories */
+.product-category {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-category::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.product-card:hover .product-category::before {
+    left: 100%;
+}
+
+/* Loading Animation for Images */
+@keyframes imageLoad {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.product-image i {
+    animation: imageLoad 0.6s ease-out;
+}
